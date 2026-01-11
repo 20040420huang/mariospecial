@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>阿澈的王敬轩2025生贺——马里奥特别版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #d0ecf7;
+            position: relative;
+        }
+
+        .gamebackground {
+            width: 1120px;
+            height: 510px;
+            border: 20px solid #a0c4da;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px auto;
+            position: relative;
+        }
+
+        #start-screen {
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('https://pic1.imgdb.cn/item/6831792b58cb8da5c80b8da8.gif') no-repeat center center;
+            background-size: cover;
+            z-index: 10;
+        }
+
+        .start-button {
+            width: 424px;
+            height: 106px;
+            position: relative;
+            bottom: -114px;
+            margin: 0 auto;
+            z-index: 1000;
+            background: url('https://pic1.imgdb.cn/item/683165d058cb8da5c80b534d.png') no-repeat center center;
+            background-size: contain;
+            border: none;
+            border-radius: 39px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .start-button:hover {
+            transform: scale(1.1);
+        }
+
+        #game-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: url('https://pic1.imgdb.cn/item/6830706a58cb8da5c80aab45.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        #ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50px;      
+        }
+
+        #mario {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            background: url('https://pic1.imgdb.cn/item/68318bfe58cb8da5c80ba990.png') no-repeat center center;
+            background-size: cover;
+            transition: left 0.1s linear;
+            transition: transform 0.1s;
+            z-index: 120;
+        }
+
+        #toolblock {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: url('https://pic1.imgdb.cn/item/683284db58cb8da5c80cbd6f.png') no-repeat center center;
+            background-size: cover;
+            z-index: 150;
+        }
+
+        #questionblock {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            background: url('https://pic1.imgdb.cn/item/6832852c58cb8da5c80cbd75.png') no-repeat center center;
+            background-size: cover;
+            z-index: 150;
+        }
+        
+        #flowers {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: url('https://pic1.imgdb.cn/item/683acf3258cb8da5c81ea6e7.png') no-repeat center center;
+            background-size: cover;
+            z-index: 100;
+            display: none;
+            transition: transform 0.3s, opacity 0.5s;
+        }
+
+        #coins {
+            position: absolute;
+            width: 40px;
+            height: 35px;
+            background: url('https://pic1.imgdb.cn/item/683add2958cb8da5c81eae73.png') no-repeat center center;
+            background-size: cover;
+            z-index: 100;
+            display: none;
+            transition: transform 0.3s, opacity 0.5s;
+        }
+
+        #star {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: url('https://pic1.imgdb.cn/item/683add2958cb8da5c81eae73.png') no-repeat center center;
+            background-size: cover;
+            z-index: 100;
+            display: none;
+            transition: transform 0.3s, opacity 0.5s;
+        }
+
+        .scorechanging {
+            position: absolute;
+            left: 330px;
+            top: 170px;
+            width: 450px;
+            height: 150px;
+            background: url('https://pic1.imgdb.cn/item/683b0bea58cb8da5c81ec6d0.png') no-repeat center center;
+            background-size: cover;
+            z-index: 200;
+            display: none;
+        }
+        .scorechanging-content {
+            margin: 5% auto;
+            padding: 5px;
+            width: 80%;
+        }
+
+        .questions {
+            position: absolute;
+            left: 330px;
+            top: 170px;
+            width: 450px;
+            height: 150px;
+            background: url('https://pic1.imgdb.cn/item/683b0bea58cb8da5c81ec6d0.png') no-repeat center center;
+            background-size: cover;
+            z-index: 200;
+            display: none;
+        }
+        .questions-content {
+            margin: 5% auto;
+            padding: 5px;
+            width: 80%;
+        }
+        
+        #score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #gameover {
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('https://pic1.imgdb.cn/item/683c903f58cb8da5c8219557.png') no-repeat center center;
+            background-size: cover;
+            z-index: 10;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            z-index: 200;
+            pointer-events: none;
+            animation: flyToScore 1s forwards;
+        }
+
+        @keyframes flyToScore {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--targetX), var(--targetY)) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        .score-pop {
+            animation: scorePop 0.3s;
+        }
+
+        @keyframes scorePop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+
+        /* 添加到现有的CSS中 */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px 2px currentColor;
+            z-index: 300;
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" autoplay loop>
+        <source src="C:\Users\20379\Desktop\mario\八音盒.mp3" type="audio/mpeg">
+    </audio>
+
+    <div style="background-color: #87CEEB; text-align:center; padding: 20px;">
+        <img src='https://pic1.imgdb.cn/item/682fe75058cb8da5c808e1df.png' alt="头部" width=60px height=65px>
+    </div>
+
+    <div class="gamebackground">
+        <div id="start-screen">
+            <button class="start-button" id="startBtn"></button>
+        </div>
+        
+        <div id="game-container">
+            <div id="ground"></div>
+            <div id="mario"></div>
+
+            <!-- 第一层平台 -->
+            <div id="questionblock" style="position: absolute; bottom: 147px; left: 72px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 150px; left: 117px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 150px; left: 123px;"></div>
+            <div id="coins" style="position: absolute; bottom: 150px; left: 123px;"></div>
+            <div id="star" style="position: absolute; bottom: 150px; left: 123px;"></div>
+
+            <div id="questionblock" style="position: absolute; bottom: 147px; left: 162px;"></div>
+            <div id="questionblock" style="position: absolute; bottom: 147px; left: 207px;"></div>
+
+            <!-- 第二层平台 -->
+            <div id="questionblock" style="position: absolute; bottom: 147px; left: 413px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 150px; left: 458px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 150px; left: 463px;"></div>
+            <div id="coins" style="position: absolute; bottom: 150px; left: 463px;"></div>
+            <div id="star" style="position: absolute; bottom: 150px; left: 463px;"></div>
+
+            <div id="questionblock" style="position: absolute; bottom: 147px; left: 503px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 150px; left: 548px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 150px; left: 553px;"></div>
+            <div id="coins" style="position: absolute; bottom: 150px; left: 553px;"></div>
+            <div id="star" style="position: absolute; bottom: 150px; left: 553px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 150px; left: 595px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 150px; left: 600px;"></div>
+            <div id="coins" style="position: absolute; bottom: 150px; left: 600px;"></div>
+            <div id="star" style="position: absolute; bottom: 150px; left: 600px;"></div>
+
+            <div id="questionblock" style="position: absolute; bottom: 147px; left: 640px;"></div>
+
+            <!-- 第三层平台 -->
+            <div id="questionblock" style="position: absolute; bottom: 147px; left: 850px;"></div>
+            <div id="questionblock" style="position: absolute; bottom: 147px; left: 895px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 150px; left: 940px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 150px; left: 945px;"></div>
+            <div id="coins" style="position: absolute; bottom: 150px; left: 945px;"></div>
+            <div id="star" style="position: absolute; bottom: 150px; left: 945px;"></div>
+
+            <div id="questionblock" style="position: absolute; bottom: 147px; left: 985px;"></div>
+
+            <!-- 第四层平台 -->
+            <div id="questionblock" style="position: absolute; bottom: 277px; left: 182px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 280px; left: 227px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 280px; left: 232px;"></div>
+            <div id="coins" style="position: absolute; bottom: 280px; left: 232px;"></div>
+            <div id="star" style="position: absolute; bottom: 280px; left: 232px;"></div>
+
+            <div id="questionblock" style="position: absolute; bottom: 277px; left: 272px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 280px; left: 317px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 280px; left: 322px;"></div>
+            <div id="coins" style="position: absolute; bottom: 280px; left: 322px;"></div>
+            <div id="star" style="position: absolute; bottom: 280px; left: 322px;"></div>
+
+            <div id="questionblock" style="position: absolute; bottom: 277px; left: 362px;"></div>
+
+            <!-- 第五层平台 -->
+            <div id="questionblock" style="position: absolute; bottom: 277px; left: 582px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 280px; left: 627px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 280px; left: 632px;"></div>
+            <div id="coins" style="position: absolute; bottom: 280px; left: 632px;"></div>
+            <div id="star" style="position: absolute; bottom: 280px; left: 632px;"></div>
+
+            <div id="questionblock" style="position: absolute; bottom: 277px; left: 672px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 280px; left: 717px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 280px; left: 722px;"></div>
+            <div id="coins" style="position: absolute; bottom: 280px; left: 722px;"></div>
+            <div id="star" style="position: absolute; bottom: 280px; left: 722px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 280px; left: 764px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 280px; left: 769px;"></div>
+            <div id="coins" style="position: absolute; bottom: 280px; left: 769px;"></div>
+            <div id="star" style="position: absolute; bottom: 280px; left: 769px;"></div>
+
+            <div id="questionblock" style="position: absolute; bottom: 277px; left: 809px;"></div>
+
+            <div id="toolblock" style="position: absolute; bottom: 280px; left: 854px;"></div>
+            <div id="flowers" style="position: absolute; bottom: 280px; left: 859px;"></div>
+            <div id="coins" style="position: absolute; bottom: 280px; left: 859px;"></div>
+            <div id="star" style="position: absolute; bottom: 280px; left: 859px;"></div>
+
+            <div id="scorechanging" class="scorechanging">
+                <div class="scorechanging-content" style="text-align: center;">
+                    <p>输入你想要的分数吧, 星星会帮你实现哦~</p>
+                    <input style="text-align: center;" type="text" id="userInput">
+                </div>
+            </div>
+
+            <div id="question1" class="questions">
+                <div class="questions-content" style="text-align: center;">
+                    <p>希望你快乐，______</p>
+                    <input style="text-align: center;" type="text" id="answer1">
+                </div>
+            </div>
+            <div id="question2" class="questions">
+                <div class="questions-content" style="text-align: center;">
+                    <p>得胜当以你为期，_____</p>
+                    <input style="text-align: center;" type="text" id="answer2">
+                </div>
+            </div>
+            <div id="question3" class="questions">
+                <div class="questions-content" style="text-align: center;">
+                    <p>听叶响，闻花香，___</p>
+                    <input style="text-align: center;" type="text" id="answer3">
+                </div>
+            </div>
+            <div id="question4" class="questions">
+                <div class="questions-content" style="text-align: center;">
+                    <p>和光同尘，____</p>
+                    <input style="text-align: center;" type="text" id="answer4">
+                </div>
+            </div>
+            <div id="question5" class="questions">
+                <div class="questions-content" style="text-align: center;">
+                    <p>外面风雨琳琅，________</p>
+                    <input style="text-align: center;" type="text" id="answer5">
+                </div>
+            </div>
+            <div id="question6" class="questions">
+                <div class="questions-content" style="text-align: center;">
+                    <p>我们不是限定，_____</p>
+                    <input style="text-align: center;" type="text" id="answer6">
+                </div>
+            </div>
+            <div id="question7" class="questions">
+                <div class="questions-content" style="text-align: center;">
+                    <p>愿你有不竭的勇气，_______</p>
+                    <input style="text-align: center;" type="text" id="answer7">
+                </div>
+            </div>
+
+            <div id="score">分数: 0</div>
+        </div>
+
+        <div id="gameover" style="display: none;"></div>
+
+    </div>
+
+    <div style="background-color: #64c9f1; text-align:center; height: 130px; position: fixed; bottom: 0; right: 0; left: 0;">
+        <img src='https://pic1.imgdb.cn/item/68306ed258cb8da5c80aaaa8.png' alt="底部-王敬轩0602生日快乐5" width=1040px height=130px style="display:block;margin: 0 auto;">
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const startScreen = document.getElementById('start-screen');
+        const startButton = document.getElementById('startBtn');
+        const gameContainer = document.getElementById('game-container');
+        const mario = document.getElementById('mario');
+        const scoreDisplay = document.getElementById('score');
+
+        // 获取音频元素
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.play().catch(e => {
+        console.log("自动播放被阻止，请点击页面以播放音乐");
+        });
+    
+        // 点击页面时播放音乐（解决浏览器自动播放限制）
+        document.body.addEventListener('click', function() {
+            bgMusic.play();
+        }, { once: true });
+
+        // 游戏状态变量
+        let gameActive = true;
+
+        // 修改分数更新函数
+        function updateScore(newScore) {
+            score = newScore;
+            scoreDisplay.textContent = '分数: ' + score;
+    
+            // 检查是否达到620分
+            if (score === 620 && gameActive) {
+                gameActive = false;
+                endGameWithFireworks();
+            }
+        }
+   
+
+        // 游戏结束并显示烟花效果
+        // 修改endGameWithFireworks函数
+        function endGameWithFireworks() { 
+            // 隐藏游戏容器
+            gameContainer.style.display = 'none';
+    
+           // 显示游戏结束屏幕
+            const gameOverScreen = document.getElementById('gameover');
+            gameOverScreen.style.display = 'flex';
+    
+            // 关闭所有可能打开的面板
+            document.querySelectorAll('.scorechanging, .questions').forEach(panel => {
+                panel.style.display = 'none';
+            });
+
+             // 创建烟花容器
+            const fireworksContainer = document.createElement('div');
+            fireworksContainer.style.position = 'absolute';
+            fireworksContainer.style.top = '0';
+            fireworksContainer.style.left = '0';
+            fireworksContainer.style.width = '100%';
+            fireworksContainer.style.height = '100%';
+            fireworksContainer.style.pointerEvents = 'none';
+            fireworksContainer.style.zIndex = '400';
+            document.querySelector('.gamebackground').appendChild(fireworksContainer);
+
+            // 获取游戏区域尺寸
+            const gameRect = document.querySelector('.gamebackground').getBoundingClientRect();
+
+            // 创建烟花函数
+            function createFirework(x, y) {
+                const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff','#ff9900', '#9900ff', '#ff0099','#ffffff'];
+                const particleCount = 100 + Math.floor(Math.random() * 50);
+                const angleIncrement = (Math.PI * 2) / particleCount;
+                const explosionPower = 5 + Math.random() * 3;
+        
+               // 创建中心亮点
+                const center = createParticle(x, y, '#ffffff', 12);
+                animateCenter(center);
+        
+               // 创建爆炸粒子
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = angleIncrement * i;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const size = 4 + Math.random() * 5;
+                    const particle = createParticle(x, y, color, size);
+            
+                     // 每个粒子有轻微随机延迟
+                    setTimeout(() => {
+                        animateParticle(particle, angle, explosionPower);
+                    }, Math.random() * 100);
+                }
+            }
+    
+            // 创建粒子元素
+            function createParticle(x, y, color, size) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.backgroundColor = color;
+                particle.style.color = color;
+                fireworksContainer.appendChild(particle);
+                return particle;
+            }
+    
+            // 中心亮点动画
+            function animateCenter(particle) {
+                let scale = 1;
+                let opacity = 1;
+        
+                const animate = () => {
+                    scale += 0.2;
+                    opacity -= 0.08;
+            
+                    particle.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                    particle.style.opacity = opacity;
+            
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+        
+                animate();
+            }
+    
+            // 粒子动画
+            function animateParticle(particle, angle, power) {
+                const duration = 2000 + Math.random() * 1000;
+                const startTime = performance.now();
+                const startX = parseFloat(particle.style.left);
+                const startY = parseFloat(particle.style.top);
+        
+                 // 随机速度变化
+                const velocity = {
+                    x: Math.cos(angle) * power * (0.8 + Math.random() * 0.4),
+                    y: Math.sin(angle) * power * (0.8 + Math.random() * 0.4)
+                };
+        
+                // 重力
+                const gravity = 0.03;
+        
+                // 阻力
+                const resistance = 0.98;
+        
+                const animate = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = elapsed / duration;
+            
+                    if (progress < 1) {
+                        // 更新速度（应用重力和阻力）
+                        velocity.x *= resistance;
+                        velocity.y *= resistance;
+                        velocity.y += gravity;
+                
+                        // 更新位置
+                        const x = startX + velocity.x * elapsed / 15;
+                        const y = startY + velocity.y * elapsed / 15;
+                
+                        particle.style.left = `${x}px`;
+                        particle.style.top = `${y}px`;
+                
+                       // 淡出效果
+                        particle.style.opacity = 1 - progress * 0.8;
+                
+                       // 大小变化
+                        const scale = 0.5 + 0.5 * (1 - progress);
+                        particle.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+        
+                requestAnimationFrame(animate);
+            }
+    
+            // 在全屏范围内放烟花
+            function launchRandomFirework() {
+                const x = gameRect.left + Math.random() * gameRect.width;
+                const y = gameRect.top + Math.random() * gameRect.height * 0.7;
+                createFirework(x, y);
+            }
+
+             // 初始烟花爆发
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    launchRandomFirework();
+                }, i * 300);
+            }
+
+            // 持续放烟花
+            const fireworksInterval = setInterval(() => {
+                launchRandomFirework();
+            }, 500);
+
+            // 点击游戏结束屏幕可以重新开始
+            gameOverScreen.addEventListener('click', () => {
+                clearInterval(fireworksInterval);
+                    gameOverScreen.style.display = 'none';
+                    fireworksContainer.remove();
+                    resetGame();
+            });
+        }
+
+        // 重置游戏函数
+        function resetGame() {
+            score = 0;
+            gameActive = true;
+            scoreDisplay.textContent = '分数: 0';
+    
+            // 重置马里奥位置
+            marioX = 50;
+            marioY = 0;
+            mario.style.left = marioX + 'px';
+            mario.style.bottom = (marioY + 50) + 'px';
+    
+            // 重置所有砖块和物品
+            document.querySelectorAll('#questionblock').forEach(block => {
+                block.style.display = 'block';
+            });
+    
+            document.querySelectorAll('#toolblock').forEach(block => {
+                block.style.display = 'block';
+            });
+    
+            document.querySelectorAll('#flowers, #coins, #star').forEach(item => {
+                item.style.display = 'none';
+            });
+    
+             // 重新初始化平台
+            platforms = [
+                { x: 0, y: 0, width: 1120, height: 50 }, // 地面
+               // 第一层平台
+                { x: 72, y: 147, width: 50, height: 50, element: questionBlocks[0], type: 'question' },
+                { x: 117, y: 150, width: 50, height: 50, element: toolBlocks[0], type: 'tool', flower: flowers[0], coin: coins[0], star: stars[0] },
+                { x: 162, y: 147, width: 50, height: 50, element: questionBlocks[1], type: 'question' },
+                { x: 207, y: 147, width: 50, height: 50, element: questionBlocks[2], type: 'question' },
+              // 第二层平台
+                { x: 413, y: 147, width: 50, height: 50, element: questionBlocks[3], type: 'question' },
+                { x: 458, y: 150, width: 50, height: 50, element: toolBlocks[1], type: 'tool', flower: flowers[1], coin: coins[1], star: stars[1] },
+                { x: 503, y: 147, width: 50, height: 50, element: questionBlocks[4], type: 'question' },
+                { x: 548, y: 150, width: 50, height: 50, element: toolBlocks[2], type: 'tool', flower: flowers[2], coin: coins[2], star: stars[2] },
+                { x: 595, y: 150, width: 50, height: 50, element: toolBlocks[3], type: 'tool', flower: flowers[3], coin: coins[3], star: stars[3] },
+                { x: 640, y: 147, width: 50, height: 50, element: questionBlocks[5], type: 'question' },
+                // 第三层平台
+                { x: 850, y: 147, width: 50, height: 50, element: questionBlocks[6], type: 'question' },
+                { x: 895, y: 147, width: 50, height: 50, element: questionBlocks[7], type: 'question' },
+                { x: 940, y: 150, width: 50, height: 50, element: toolBlocks[4], type: 'tool', flower: flowers[4], coin: coins[4], star: stars[4] },
+                { x: 985, y: 147, width: 50, height: 50, element: questionBlocks[8], type: 'question' },
+               // 第四层平台
+                { x: 182, y: 277, width: 50, height: 50, element: questionBlocks[9], type: 'question' },
+                { x: 227, y: 280, width: 50, height: 50, element: toolBlocks[5], type: 'tool', flower: flowers[5], coin: coins[5], star: stars[5] },
+                { x: 272, y: 277, width: 50, height: 50, element: questionBlocks[10], type: 'question' },
+                { x: 317, y: 280, width: 50, height: 50, element: toolBlocks[6], type: 'tool', flower: flowers[6], coin: coins[6], star: stars[6] },
+                { x: 362, y: 277, width: 50, height: 50, element: questionBlocks[11], type: 'question' },
+                // 第五层平台
+                { x: 582, y: 277, width: 50, height: 50, element: questionBlocks[12], type: 'question' },
+                { x: 627, y: 280, width: 50, height: 50, element: toolBlocks[7], type: 'tool', flower: flowers[7], coin: coins[7], star: stars[7] },
+                { x: 672, y: 277, width: 50, height: 50, element: questionBlocks[13], type: 'question' },
+                { x: 717, y: 280, width: 55, height: 50, element: toolBlocks[8], type: 'tool', flower: flowers[8], coin: coins[8], star: stars[8] },
+                { x: 764, y: 280, width: 55, height: 50, element: toolBlocks[9], type: 'tool', flower: flowers[9], coin: coins[9], star: stars[9] },
+                { x: 809, y: 277, width: 55, height: 50, element: questionBlocks[14], type: 'question' },
+                { x: 854, y: 280, width: 50, height: 50, element: toolBlocks[10], type: 'tool', flower: flowers[10], coin: coins[10], star: stars[10] }
+            ];
+    
+            // 重新随机分配物品
+            startGame();
+        }
+
+
+        // 开始游戏函数
+        function startGame() {
+            startScreen.style.display = 'none';
+            gameContainer.style.display = 'block';
+            
+            // 获取所有toolblock、flowers、coins和stars元素
+            const toolBlocks = document.querySelectorAll('#toolblock');
+            const flowers = document.querySelectorAll('#flowers');
+            const coins = document.querySelectorAll('#coins');
+            const stars = document.querySelectorAll('#star');
+            
+            // 确保至少有3个flowers和6个coins，以及1个star
+            let flowerCount = 0;
+            let coinCount = 0;
+            let starCount = 0;
+            
+            // 先随机分配，确保至少3个flowers和6个coins
+            for (let i = 0; i < toolBlocks.length; i++) {
+                // 随机决定显示什么
+                const randomValue = Math.random();
+                
+                if (randomValue < 0.2 && starCount < 1) {
+                    // 放置星星
+                    stars[i].style.display = 'block';
+                    flowers[i].style.display = 'none';
+                    coins[i].style.display = 'none';
+                    starCount++;
+                } else if (randomValue < 0.5 || flowerCount < 3 && toolBlocks.length - i <= 3 - flowerCount) {
+                    // 放置花朵
+                    flowers[i].style.display = 'block';
+                    coins[i].style.display = 'none';
+                    stars[i].style.display = 'none';
+                    flowerCount++;
+                } else {
+                    // 放置金币
+                    coins[i].style.display = 'block';
+                    flowers[i].style.display = 'none';
+                    stars[i].style.display = 'none';
+                    coinCount++;
+                }
+            }
+            
+            // 确保至少有一个星星
+            if (starCount === 0) {
+                // 随机选择一个位置放置星星
+                const randomIndex = Math.floor(Math.random() * toolBlocks.length);
+                stars[randomIndex].style.display = 'block';
+                flowers[randomIndex].style.display = 'none';
+                coins[randomIndex].style.display = 'none';
+                starCount++;
+                
+                // 如果替换的是花朵，减少花朵计数
+                if (flowers[randomIndex].style.display === 'block') {
+                    flowerCount--;
+                }
+                // 如果替换的是金币，减少金币计数
+                if (coins[randomIndex].style.display === 'block') {
+                    coinCount--;
+                }
+            }
+            
+            // 如果coins不足6个，从flowers中转换
+            if (coinCount < 6) {
+                const neededCoins = 6 - coinCount;
+                let converted = 0;
+                
+                // 从flowers中随机选择转换为coins
+                const flowerIndices = [];
+                for (let i = 0; i < flowers.length; i++) {
+                    if (flowers[i].style.display === 'block') {
+                        flowerIndices.push(i);
+                    }
+                }
+                
+                // 随机打乱flowers索引
+                flowerIndices.sort(() => Math.random() - 0.5);
+                
+                // 转换足够的flowers为coins
+                for (let i = 0; i < Math.min(neededCoins, flowerIndices.length); i++) {
+                    const index = flowerIndices[i];
+                    flowers[index].style.display = 'none';
+                    coins[index].style.display = 'block';
+                    flowerCount--;
+                    coinCount++;
+                    converted++;
+                }
+            }
+            
+            // 如果flowers不足3个，从coins中转换
+            if (flowerCount < 3) {
+                const neededFlowers = 3 - flowerCount;
+                let converted = 0;
+                
+                // 从coins中随机选择转换为flowers
+                const coinIndices = [];
+                for (let i = 0; i < coins.length; i++) {
+                    if (coins[i].style.display === 'block') {
+                        coinIndices.push(i);
+                    }
+                }
+                
+                // 随机打乱coins索引
+                coinIndices.sort(() => Math.random() - 0.5);
+                
+                // 转换足够的coins为flowers
+                for (let i = 0; i < Math.min(neededFlowers, coinIndices.length); i++) {
+                    const index = coinIndices[i];
+                    coins[index].style.display = 'none';
+                    flowers[index].style.display = 'block';
+                    coinCount--;
+                    flowerCount++;
+                    converted++;
+                }
+            }
+        }
+
+        // 点击开始按钮
+        startButton.addEventListener('click', startGame);
+
+        // 游戏状态变量
+        let marioX = 50;
+        let marioY = 0;
+        let velocityY = 0;
+        let isMovingLeft = false;
+        let isMovingRight = false;
+        let isJumping = false;
+        let facingRight = true;
+        let score = 0;
+        const gravity = -0.5;
+        const jumpForce = 13; 
+        const moveSpeed = 5;
+
+        // 获取所有砖块和花朵元素
+        const questionBlocks = document.querySelectorAll('#questionblock');
+        const toolBlocks = document.querySelectorAll('#toolblock');
+        const flowers = document.querySelectorAll('#flowers');
+        const coins = document.querySelectorAll('#coins');
+        const stars = document.querySelectorAll('#star');
+        
+        // 平台数组
+        let platforms = [
+            { x: 0, y: 0, width: 1120, height: 50 }, // 地面
+            // 第一层平台
+            { x: 72, y: 147, width: 50, height: 50, element: questionBlocks[0], type: 'question' },
+            { x: 117, y: 150, width: 50, height: 50, element: toolBlocks[0], type: 'tool', flower: flowers[0], coin: coins[0], star: stars[0] },
+            { x: 162, y: 147, width: 50, height: 50, element: questionBlocks[1], type: 'question' },
+            { x: 207, y: 147, width: 50, height: 50, element: questionBlocks[2], type: 'question' },
+            // 第二层平台
+            { x: 413, y: 147, width: 50, height: 50, element: questionBlocks[3], type: 'question' },
+            { x: 458, y: 150, width: 50, height: 50, element: toolBlocks[1], type: 'tool', flower: flowers[1], coin: coins[1], star: stars[1] },
+            { x: 503, y: 147, width: 50, height: 50, element: questionBlocks[4], type: 'question' },
+            { x: 548, y: 150, width: 50, height: 50, element: toolBlocks[2], type: 'tool', flower: flowers[2], coin: coins[2], star: stars[2] },
+            { x: 595, y: 150, width: 50, height: 50, element: toolBlocks[3], type: 'tool', flower: flowers[3], coin: coins[3], star: stars[3] },
+            { x: 640, y: 147, width: 50, height: 50, element: questionBlocks[5], type: 'question' },
+            // 第三层平台
+            { x: 850, y: 147, width: 50, height: 50, element: questionBlocks[6], type: 'question' },
+            { x: 895, y: 147, width: 50, height: 50, element: questionBlocks[7], type: 'question' },
+            { x: 940, y: 150, width: 50, height: 50, element: toolBlocks[4], type: 'tool', flower: flowers[4], coin: coins[4], star: stars[4] },
+            { x: 985, y: 147, width: 50, height: 50, element: questionBlocks[8], type: 'question' },
+            // 第四层平台
+            { x: 182, y: 277, width: 50, height: 50, element: questionBlocks[9], type: 'question' },
+            { x: 227, y: 280, width: 50, height: 50, element: toolBlocks[5], type: 'tool', flower: flowers[5], coin: coins[5], star: stars[5] },
+            { x: 272, y: 277, width: 50, height: 50, element: questionBlocks[10], type: 'question' },
+            { x: 317, y: 280, width: 50, height: 50, element: toolBlocks[6], type: 'tool', flower: flowers[6], coin: coins[6], star: stars[6] },
+            { x: 362, y: 277, width: 50, height: 50, element: questionBlocks[11], type: 'question' },
+            // 第五层平台
+            { x: 582, y: 277, width: 50, height: 50, element: questionBlocks[12], type: 'question' },
+            { x: 627, y: 280, width: 50, height: 50, element: toolBlocks[7], type: 'tool', flower: flowers[7], coin: coins[7], star: stars[7] },
+            { x: 672, y: 277, width: 50, height: 50, element: questionBlocks[13], type: 'question' },
+            { x: 717, y: 280, width: 55, height: 50, element: toolBlocks[8], type: 'tool', flower: flowers[8], coin: coins[8], star: stars[8] },
+            { x: 764, y: 280, width: 55, height: 50, element: toolBlocks[9], type: 'tool', flower: flowers[9], coin: coins[9], star: stars[9] },
+            { x: 809, y: 277, width: 55, height: 50, element: questionBlocks[14], type: 'question' },
+            { x: 854, y: 280, width: 50, height: 50, element: toolBlocks[10], type: 'tool', flower: flowers[10], coin: coins[10], star: stars[10] }
+        ];
+
+        // 初始化马里奥位置
+        mario.style.left = marioX + 'px';
+        mario.style.bottom = (marioY + 50) + 'px';
+
+        // 创建粒子效果
+        function createParticles(element, count, isFlower) {
+            const rect = element.getBoundingClientRect();
+            const gameRect = gameContainer.getBoundingClientRect();
+            const scoreRect = scoreDisplay.getBoundingClientRect();
+            
+            const startX = rect.left - gameRect.left + rect.width / 2;
+            const startY = rect.top - gameRect.top + rect.height / 2;
+            const endX = scoreRect.left - gameRect.left + scoreRect.width / 2;
+            const endY = scoreRect.top - gameRect.top + scoreRect.height / 2;
+            
+            const targetX = (endX - startX) + 'px';
+            const targetY = (endY - startY) + 'px';
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                // 随机颜色
+                const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE', '#B2FF59', '#EEFF41', '#FFFF00', '#FFD740', '#FFAB40', '#FF6E40'];
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // 随机起始位置
+                const offsetX = (Math.random() - 0.5) * 30;
+                const offsetY = (Math.random() - 0.5) * 30;
+                
+                particle.style.left = (startX + offsetX) + 'px';
+                particle.style.top = (startY + offsetY) + 'px';
+                
+                // 设置动画目标
+                particle.style.setProperty('--targetX', targetX);
+                particle.style.setProperty('--targetY', targetY);
+                
+                // 随机大小
+                const size = 5 + Math.random() * 10;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                gameContainer.appendChild(particle);
+                
+                // 动画结束后移除粒子
+                setTimeout(() => {
+                    particle.remove();
+                }, 1000);
+            }
+        }
+
+        // 触发奖励动画
+        function triggerRewardAnimation(element, isFlower) {
+            // 放大效果
+            element.style.transform = 'scale(1.5)';
+            
+            // 创建粒子
+            createParticles(element, isFlower ? 8 : 12, isFlower);
+            
+            // 逐渐消失
+            setTimeout(() => {
+                element.style.opacity = '0';
+            }, 300);
+            
+            // 动画结束后隐藏元素
+            setTimeout(() => {
+                element.style.display = 'none';
+                element.style.transform = 'scale(1)';
+                element.style.opacity = '1';
+            }, 800);
+            
+            // 分数显示动画
+            scoreDisplay.classList.add('score-pop');
+            setTimeout(() => {
+                scoreDisplay.classList.remove('score-pop');
+            }, 300);
+        }
+
+        // 同样修改 showScoreChangingPanel 函数
+        function showScoreChangingPanel() {
+            const panel = document.getElementById('scorechanging');
+    
+              // 先移除之前的面板（如果有）
+            document.querySelectorAll('.scorechanging, .questions').forEach(panel => {
+                panel.style.display = 'none';
+            });
+    
+            panel.style.display = 'block';
+    
+           // 聚焦输入框
+            const input = panel.querySelector('input');
+            input.value = ''; // 清空输入框
+            input.focus();
+    
+            // 先移除旧的监听器（如果有）
+            input.removeEventListener('keypress', handleScoreInput);
+    
+           // 添加新的监听器
+            function handleScoreInput(e) {
+                if (e.key === 'Enter') {
+                    const newScore = parseInt(this.value);
+                    if (!isNaN(newScore)) {
+                     // 限制分数范围在0-9999之间
+                        updateScore(newScore);
+                    }
+                    panel.style.display = 'none';
+                    input.removeEventListener('keypress', handleScoreInput); // 移除监听器
+                }
+            }
+    
+            input.addEventListener('keypress', handleScoreInput);
+        }
+
+        // 在游戏状态变量部分添加答案数组
+        const questionAnswers = [
+            "希望你平安",
+            "越山先悦己",
+            "少思量",
+            "与时舒卷",
+            "漫山遍野都是今天",
+            "是来日方长",
+            "保持自由和热烈"
+        ];
+
+        // 修改 showRandomQuestionPanel 函数
+        function showRandomQuestionPanel() {
+            // 随机选择一个问题面板
+            const questionPanels = document.querySelectorAll('.questions');
+            const randomIndex = Math.floor(Math.random() * questionPanels.length);
+            const selectedPanel = questionPanels[randomIndex];
+            const correctAnswer = questionAnswers[randomIndex];
+    
+            // 先移除之前的面板（如果有）
+            document.querySelectorAll('.questions').forEach(panel => {
+            panel.style.display = 'none';
+            });
+    
+            // 显示当前面板
+            selectedPanel.style.display = 'block';
+    
+            // 聚焦输入框
+            const input = selectedPanel.querySelector('input');
+            input.value = ''; // 清空输入框
+            input.focus();
+    
+            // 先移除旧的监听器（如果有）
+            input.removeEventListener('keypress', handleQuestionInput);
+    
+            // 添加新的监听器
+            function handleQuestionInput(e) {
+                if (e.key === 'Enter') {
+                    const userAnswer = this.value.trim();
+                    if (userAnswer === correctAnswer) {
+                        updateScore(score + 10);
+                    } 
+                    if (userAnswer === correctAnswer + "。"){
+                        updateScore(score + -10);
+                    }
+                    selectedPanel.style.display = 'none';
+                    input.removeEventListener('keypress', handleQuestionInput); // 移除监听器
+                }
+            }
+            input.addEventListener('keypress', handleQuestionInput);
+            return questionistrue;
+        }
+
+
+        // 键盘控制
+        window.addEventListener('keydown', function(event) {
+            switch(event.key) {
+                case 'ArrowLeft':
+                    isMovingLeft = true;
+                    if (facingRight) {
+                        mario.style.transform = 'scaleX(-1)';
+                        facingRight = false;
+                    }
+                    break;
+                case 'ArrowRight':
+                    isMovingRight = true;
+                    if (!facingRight) {
+                        mario.style.transform = 'scaleX(1)';
+                        facingRight = true;
+                    }
+                    break;
+                case ' ':
+                    if (!isJumping) {
+                        velocityY = jumpForce;
+                        isJumping = true;
+                    }
+                    break;
+            }
+        });
+
+        window.addEventListener('keyup', function(event) {
+            switch(event.key) {
+                case 'ArrowLeft':
+                    isMovingLeft = false;
+                    break;
+                case 'ArrowRight':
+                    isMovingRight = false;
+                    break;
+            }
+        });
+
+        // 改进后的碰撞检测函数
+        function checkCollisions() {
+            const marioBottom = marioY + 50 + 60; // 马里奥底部位置
+            const marioTop = marioY + 50;
+            const marioLeft = marioX;
+            const marioRight = marioX + 40;
+        
+            let onSurface = false;
+        
+            // 1. 检查地面碰撞
+            const groundTop = 50;
+            if (marioBottom > groundTop && marioBottom <= groundTop + 60 && 
+                velocityY < 0) {
+                marioY = groundTop - 50;
+                velocityY = 0;
+                isJumping = false;
+                onSurface = true;
+                return onSurface;
+            }
+        
+            // 2. 检查平台碰撞
+            for (let i = 0; i < platforms.length; i++) {
+                const platform = platforms[i];
+                if (platform.y === 0) continue; // 跳过地面
+        
+                const platformTop = platform.y;
+                const platformBottom = platformTop + platform.height;
+                const platformLeft = platform.x;
+                const platformRight = platform.x + platform.width;
+        
+                // 检查水平重叠
+                const horizontalOverlap = marioRight > platformLeft && marioLeft < platformRight;
+        
+                // 情况1：从上方落在平台上
+                if (horizontalOverlap && 
+                    marioTop >= platformBottom - 5 && 
+                    marioTop <= platformBottom + 5 && 
+                    velocityY < 0) {
+                    marioY = platformTop;
+                    velocityY = 0;
+                    isJumping = false;
+                    onSurface = true;
+                    break;
+                }
+                
+                // 情况2：从下方碰撞平台
+                if (horizontalOverlap && 
+                    marioBottom <= platformTop + 5 && 
+                    marioBottom >= platformTop - 5 && 
+                    velocityY > 0) {
+                    // 如果是工具砖块，则移除并显示花朵、金币或星星
+                    if (platform.type === 'tool') {
+                        platform.element.style.display = 'none';
+                        if (platform.flower && platform.flower.style.display === 'block') {
+                            updateScore(score + 200);
+                            triggerRewardAnimation(platform.flower, true);
+                        }
+                        if (platform.coin && platform.coin.style.display === 'block') {
+                            updateScore(score + 10);
+                            triggerRewardAnimation(platform.coin, false);
+                        }
+                        if (platform.star && platform.star.style.display === 'block') {
+                            showScoreChangingPanel();
+                            triggerRewardAnimation(platform.star, false);
+                        }
+                        platforms.splice(i, 1); // 从平台数组中移除
+                        i--; // 调整索引
+                    }
+                    if (platform.type === 'question') {
+                        platform.element.style.display = 'none';
+                        showRandomQuestionPanel()
+                        platforms.splice(i, 1); // 从平台数组中移除
+                        i--; // 调整索引
+                        
+                    }
+                    marioY = platformBottom - 50 -60 -50;
+                    velocityY = 0;
+                    break;
+                }
+
+                // 检查垂直重叠
+                const verticalOverlap = marioBottom > platformTop && marioTop < platformBottom;
+
+                // 情况3：从左侧碰撞平台
+                if (verticalOverlap && 
+                    marioRight >= platformLeft - 5 && 
+                    marioRight <= platformLeft + 5 && 
+                    isMovingRight) {
+                    marioX = platformLeft - 40;
+                    break;
+                }
+                
+                // 情况4：从右侧碰撞平台
+                if (verticalOverlap && 
+                    marioLeft <= platformRight + 5 && 
+                    marioLeft >= platformRight - 5 && 
+                    isMovingLeft) {
+                    marioX = platformRight;
+                    break;
+                }
+            }
+        
+            return onSurface;
+        }
+
+        // 更新马里奥位置
+        function updateMario() {
+            // 水平移动
+            if (isMovingLeft) {
+                marioX = Math.max(0, marioX - moveSpeed);
+            }
+            if (isMovingRight) {
+                marioX = Math.min(1120 - 40, marioX + moveSpeed);
+            }
+
+            // 应用重力
+            velocityY += gravity;
+        
+            // 限制最大下落速度
+            if (velocityY < -15) {
+                velocityY = -15;
+            }
+        
+            // 更新垂直位置
+            marioY = Math.min(510-50-60, marioY + velocityY);
+        
+            // 检测碰撞
+            checkCollisions();
+
+            // 更新位置
+            mario.style.left = marioX + 'px';
+            mario.style.bottom = (marioY + 50) + 'px';
+        }
+
+        // 游戏循环
+        function gameLoop() {
+            updateMario();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // 启动游戏循环
+        gameLoop();
+    </script>
+</body>
+</html>
